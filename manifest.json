@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Save Tab Cookies as CSV",
+  "version": "1.0",
+  "description": "Save current tab's cookies as a CSV file.",
+  "permissions": ["cookies", "activeTab", "scripting", "downloads"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Save Cookies as CSV"
+  }
+} 

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Save Cookies as CSV</title>
+    <link href="tabulator.min.css" rel="stylesheet">
+    <style>
+      body { min-width: 350px; font-family: Arial, sans-serif; }
+      button { width: 100%; padding: 10px; font-size: 16px; }
+      #cookie-search { width: 100%; margin: 10px 0; }
+      #cookie-table { margin-top: 10px; }
+    </style>
+  </head>
+  <body>
+    <button id="save-cookies">Save Cookies as CSV</button>
+    <hr>
+    <input type="text" id="cookie-search" placeholder="Search cookie name...">
+    <div id="cookie-table"></div>
+    <script src="tabulator.min.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html> 
