@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1753974166652",
+    "receivedAt": "2025-07-31T15:02:46.652Z",
+    "timestamp": "2025-07-31T15:02:46.650Z",
+    "totalCookies": 2,
+    "cookies": [
+      {
+        "name": "pg_cid",
+        "value": "34f34f824b7a24b66c06f7d352c3bde6",
+        "domain": "pageguard.feroot.com",
+        "path": "/v1/e831459c-f984-4940-b7b0-1fe4195b6e2e",
+        "secure": true,
+        "httpOnly": true,
+        "expirationDate": 1775239993.812445,
+        "sameSite": "no_restriction",
+        "storeId": "0"
+      },
+      {
+        "name": "ttcsid_CL5BC7JC77U7DE81PG90",
+        "value": "1744723360971.1.1744723361384",
+        "domain": ".ticketmaster.com",
+        "path": "/",
+        "secure": false,
+        "httpOnly": false,
+        "expirationDate": 1778419361,
+        "sameSite": "unspecified",
+        "storeId": "0"
+      }
+    ]
+  }
+]

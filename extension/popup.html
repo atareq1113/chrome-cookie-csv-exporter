@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Save Cookies as CSV</title>
+    <link href="tabulator.min.css" rel="stylesheet">
+    <style>
+      body { min-width: 350px; font-family: Arial, sans-serif; }
+      button { width: 100%; padding: 10px; font-size: 16px; margin-bottom: 5px; }
+      #cookie-search { width: 100%; margin: 10px 0; }
+      #cookie-table { margin-top: 10px; }
+      .button-group { display: flex; gap: 5px; flex-wrap: wrap; }
+      .button-group button { flex: 1; min-width: 100px; }
+      #api-status { 
+        font-size: 12px; 
+        padding: 5px; 
+        margin: 5px 0; 
+        border-radius: 3px; 
+        text-align: center;
+      }
+      .status-success { background-color: #d4edda; color: #155724; }
+      .status-error { background-color: #f8d7da; color: #721c24; }
+      .status-loading { background-color: #fff3cd; color: #856404; }
+      .delete-button { background-color: #dc3545; color: white; }
+      .delete-button:hover { background-color: #c82333; }
+    </style>
+  </head>
+  <body>
+    <div class="button-group">
+      <button id="save-cookies">Save as CSV</button>
+      <button id="send-cookies">Send to API</button>
+      <button id="delete-stored" class="delete-button">Delete Stored</button>
+      <!--<button id="send-filtered">Send Filtered</button>-->
+    </div>
+    <div id="api-status" style="display: none;"></div>
+    <hr>
+    <input type="text" id="cookie-search" placeholder="Search cookie name...">
+    <div id="cookie-table"></div>
+    <script src="tabulator.min.js"></script>
+    <script src="cookie-api.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html> 
