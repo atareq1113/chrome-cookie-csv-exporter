@@ -2,9 +2,9 @@
   "manifest_version": 3,
   "name": "Save Tab Cookies as CSV",
   "version": "1.0",
-  "description": "Save current tab's cookies as a CSV file.",
+  "description": "Save current tab's cookies as a CSV file and view Jancy profiles.",
   "permissions": ["cookies", "activeTab", "scripting", "downloads"],
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": ["<all_urls>", "http://localhost/*"],
   "action": {
     "default_popup": "popup.html",
     "default_title": "Save Cookies as CSV"

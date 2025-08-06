@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Save Cookies as CSV</title>
+    <link href="tabulator.min.css" rel="stylesheet">
+    <style>
+      body { min-width: 400px; font-family: Arial, sans-serif; }
+      button { width: 100%; padding: 10px; font-size: 16px; margin-bottom: 10px; }
+      #cookie-search { width: 100%; margin: 10px 0; }
+      #cookie-table { margin-top: 10px; }
+      .jancy-button { 
+        background-color: #3498db; 
+        color: white; 
+        border: none; 
+        border-radius: 4px;
+        transition: background-color 0.2s;
+      }
+      .jancy-button:hover { background-color: #2980b9; }
+      .jancy-button:disabled { 
+        background-color: #bdc3c7; 
+        cursor: not-allowed; 
+      }
+      .jancy-button:disabled:hover { background-color: #bdc3c7; }
+      .section-divider { 
+        border: none; 
+        height: 1px; 
+        background-color: #ddd; 
+        margin: 15px 0; 
+      }
+      .status-text {
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+        margin-top: 5px;
+      }
+      
+      /* Jancy Dialog Styles */
+      #jancy-dialog {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      }
+      
+      #jancy-dialog-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        width: 95%;
+        max-width: 600px;
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+      
+      .jancy-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+      }
+      
+      .jancy-close {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background-color 0.2s;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        color: #666;
+        line-height: 1;
+      }
+      
+      .jancy-close:hover {
+        background-color: #f0f0f0;
+        color: #333;
+      }
+      
+      .jancy-loading {
+        text-align: center;
+        padding: 40px 20px;
+      }
+      
+      .jancy-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #f3f3f3;
+        border-top: 2px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Tabulator overrides for Jancy table */
+      #jancy-table {
+        margin-top: 10px;
+        font-size: 12px;
+      }
+      
+      #jancy-table .tabulator-header {
+        background-color: #f8f9fa;
+        border-bottom: 2px solid #dee2e6;
+      }
+      
+      #jancy-table .tabulator-col {
+        background-color: #f8f9fa;
+        border-right: 1px solid #dee2e6;
+        font-weight: bold;
+        color: #495057;
+      }
+      
+      #jancy-table .tabulator-cell {
+        border-right: 1px solid #dee2e6;
+        border-bottom: 1px solid #dee2e6;
+        padding: 8px 4px;
+      }
+      
+      #jancy-table .tabulator-row {
+        border-bottom: 1px solid #dee2e6;
+      }
+      
+      #jancy-table .tabulator-row:hover {
+        background-color: #f8f9fa;
+      }
+      
+      /* Fix pagination controls */
+      #jancy-table .tabulator-footer {
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+        padding: 8px;
+      }
+      
+      #jancy-table .tabulator-paginator {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+      }
+      
+      #jancy-table .tabulator-paginator button {
+        padding: 4px 8px;
+        margin: 0 2px;
+        border: 1px solid #dee2e6;
+        background-color: white;
+        cursor: pointer;
+        border-radius: 3px;
+        font-size: 12px;
+      }
+      
+      #jancy-table .tabulator-paginator button:hover {
+        background-color: #e9ecef;
+      }
+      
+      #jancy-table .tabulator-paginator button.tabulator-page[disabled] {
+        background-color: #f8f9fa;
+        color: #6c757d;
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+      
+      #jancy-table .tabulator-paginator .tabulator-page-size {
+        margin: 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="save-cookies">Save Cookies as CSV</button>
+    <hr class="section-divider">
+    <button id="view-jancy-profiles" class="jancy-button">View Jancy Profiles</button>
+    <div id="jancy-status" class="status-text">Available</div>
+    <hr class="section-divider">
+    <input type="text" id="cookie-search" placeholder="Search cookie name...">
+    <div id="cookie-table"></div>
+    
+    <!-- Jancy Dialog -->
+    <div id="jancy-dialog">
+      <div id="jancy-dialog-content">
+        <div class="jancy-header">
+          <h2 style="margin: 0;">Jancy Profiles</h2>
+          <button class="jancy-close" id="jancy-close-btn">X</button>
+        </div>
+        <div style="margin-bottom: 15px;">
+          <input type="text" id="jancy-search" placeholder="Search profiles, names, or emails..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+        </div>
+        <div id="jancy-content">
+          <div class="jancy-loading">
+            <div style="font-size: 48px; margin-bottom: 20px;">👤</div>
+            <h3 style="margin: 0 0 10px 0; color: #333;">Jancy Profiles</h3>
+            <p style="margin: 0; color: #666;">Loading profile information...</p>
+            <div style="margin-top: 20px;">
+              <div class="jancy-spinner"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="tabulator.min.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html> 
