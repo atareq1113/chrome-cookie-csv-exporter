@@ -3,9 +3,8 @@
 ## Overview
 This Chrome extension allows you to view, search, filter, and download cookies from your browser in CSV format. You can:
 - View all cookies in a sortable, filterable table (powered by [Tabulator](http://tabulator.info/)).
-- Search for cookies by name (supports multiple terms and exclusions).
+- Search for cookies by name (supports multiple names and exclusions).
 - Download all visible (filtered) cookies as a CSV file.
-- Download individual cookies as CSV files.
 
 ## Features
 - **Table View:** All cookies are displayed in a table with columns for name, value, domain, path, secure, HTTP only, expiration date, and same site.
@@ -16,7 +15,6 @@ This Chrome extension allows you to view, search, filter, and download cookies f
   - Mix include and exclude (e.g., `foo,!bar` includes cookies with `foo` but not `bar`).
 - **Download:**
   - The main "Save Cookies as CSV" button downloads only the cookies currently visible in the table (after filtering).
-  - Each row can have a download button to save that specific cookie as a CSV file (if enabled in the code).
 
 ## Installation
 1. Download or clone this repository to your computer.
@@ -34,7 +32,6 @@ This Chrome extension allows you to view, search, filter, and download cookies f
      - `!foo,bar` — excludes cookies with `foo` or `bar` in the name.
      - `foo,!bar` — includes cookies with `foo` but not `bar`.
 3. Click **Save Cookies as CSV** to download all currently visible cookies as a CSV file.
-4. (If enabled) Click the download button in a row to download just that cookie as a CSV file.
 
 ## CSV Format
 The CSV file contains the following columns:
@@ -53,6 +50,3 @@ The CSV file contains the following columns:
 ## Notes
 - The extension can only access cookies your browser allows for extensions (some may be restricted for security/privacy).
 - Filtering and download features work entirely client-side; no data is sent anywhere.
-
----
-Enjoy your cookie management! 
